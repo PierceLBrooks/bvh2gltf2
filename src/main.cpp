@@ -342,7 +342,7 @@ bool loadFile(std::string& output, const std::string& filename)
 
 	output.resize(fileSize);
 
-	file.read(output.data(), fileSize);
+	file.read(&output[0], fileSize);
 	file.close();
 
 	return true;
@@ -480,7 +480,7 @@ int main(int argc, char *argv[])
 
     data.resize(byteData.size());
     // Copy current content
-    memcpy(data.data() + byteOffset, byteData.data(), byteData.size());
+    memcpy(&data[0] + byteOffset, &byteData[0], byteData.size());
 
     glTF["bufferViews"][0]["byteLength"] = data.size();
     glTF["accessors"][0]["count"] = glTF["nodes"].size();
@@ -519,7 +519,7 @@ int main(int argc, char *argv[])
     glTF["accessors"][accessorIndex]["max"].push_back(keyframes.back());
 
     data.resize(data.size() + keyframes.size() * sizeof(float));
-    memcpy(data.data() + byteOffset, keyframes.data(), keyframes.size() * sizeof(float));
+    memcpy(&data[0] + byteOffset, &keyframes[0], keyframes.size() * sizeof(float));
 
     byteOffset = data.size();
 
@@ -580,7 +580,7 @@ int main(int argc, char *argv[])
 		    }
 
 		    data.resize(data.size() + finalPositionData.size() * sizeof(float));
-		    memcpy(data.data() + byteOffset, finalPositionData.data(), finalPositionData.size() * sizeof(float));
+		    memcpy(&data[0] + byteOffset, &finalPositionData[0], finalPositionData.size() * sizeof(float));
 
 		    byteOffset = data.size();
 
@@ -655,7 +655,7 @@ int main(int argc, char *argv[])
 		    }
 
 		    data.resize(data.size() + finalRotationData.size() * sizeof(float));
-		    memcpy(data.data() + byteOffset, finalRotationData.data(), finalRotationData.size() * sizeof(float));
+		    memcpy(&data[0] + byteOffset, &finalRotationData[0], finalRotationData.size() * sizeof(float));
 
 		    byteOffset = data.size();
 
